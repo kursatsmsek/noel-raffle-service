@@ -4,10 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class NoelraffleserviceApplication {
-
-	public static void main(String[] args) {
-		SpringApplication.run(NoelraffleserviceApplication.class, args);
-	}
+public class NoelRaffleserviceApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(NoelRaffleserviceApplication.class, args);
+    }
 
 }
