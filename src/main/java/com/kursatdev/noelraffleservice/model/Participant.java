@@ -2,14 +2,16 @@ package com.kursatdev.noelraffleservice.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
 
 @Entity
 @Data
 public class Participant {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String name;
 
     private String surname;
@@ -24,4 +26,7 @@ public class Participant {
     @JoinColumn(name = "gift_raffle_id")
     private GiftRaffle giftRaffle;
 
+    public String getDisplayName() {
+        return name + " " + surname;
+    }
 }

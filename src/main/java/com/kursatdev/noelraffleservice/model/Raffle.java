@@ -4,6 +4,7 @@ import jakarta.persistence.MappedSuperclass;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.Map;
 
 @MappedSuperclass
 @Data
@@ -17,6 +18,6 @@ public abstract class Raffle {
 
     private Date raffleDate;
 
-    public abstract void performRaffle();
+    public abstract Map<Participant, Participant> performRaffle();
 
 }
