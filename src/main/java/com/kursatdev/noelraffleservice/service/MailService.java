@@ -28,10 +28,11 @@ public class MailService {
         mailSender.send(message);
     }
 
-    public void sendEmail(String toEmail, String toDisplayName, String receiverDisplayName) {
+    public void sendEmail(String toEmail, String toDisplayName, String receiverDisplayName, String raffleTitle) {
         Context context = new Context();
         context.setVariable("displayName", toDisplayName);
         context.setVariable("receiverDisplayName", receiverDisplayName);
+        context.setVariable("raffleTitle", raffleTitle);
         context.setLocale(new Locale("tr"));
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "UTF-8");
@@ -43,7 +44,7 @@ public class MailService {
             helper.setText(htmlContent, true);
             mailSender.send(mimeMessage);
         } catch (MessagingException e) {
-            System.out.println(e.getCause());
+            System.out.println(e.getMessage());
         }
     }
 

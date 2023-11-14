@@ -19,15 +19,14 @@ public class NoelRaffleService {
 
     private final MailService mailService;
 
-    public void executeRaffle(NoelRaffleData noelRaffleData) {
+    public void executeRaffle(NoelRaffleData noelRaffleData) throws Exception {
         NoelRaffle noelRaffle = convertDataToNoelRaffle(noelRaffleData);
 
         noelRaffleRepository.save(noelRaffle);
         Map<Participant, Participant> matches = noelRaffle.performRaffle();
         matches.forEach((Participant giver, Participant receiver) -> {
-            mailService.sendEmail(giver.getEmail(), giver.getDisplayName(), receiver.getDisplayName());
+            mailService.sendEmail(giver.getEmail(), giver.getDisplayName(), receiver.getDisplayName(), noelRaffle.getTitle());
         });
-
     }
 
     public NoelRaffle convertDataToNoelRaffle(NoelRaffleData noelRaffleData) {
