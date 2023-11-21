@@ -1,7 +1,6 @@
 package com.kursatdev.noelraffleservice.controller;
 
 import com.kursatdev.noelraffleservice.dto.NoelRaffleData;
-import com.kursatdev.noelraffleservice.service.NoelRaffleService;
 import lombok.AllArgsConstructor;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
@@ -15,9 +14,6 @@ import java.util.Locale;
 @AllArgsConstructor
 @CrossOrigin("http://localhost:3000/")
 public class NoelRaffleController {
-
-    private final NoelRaffleService noelRaffleService;
-
     private final MessageSource messageSource;
 
     @PostMapping ("/raffle")
