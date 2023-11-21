@@ -3,7 +3,6 @@ package com.kursatdev.noelraffleservice.service;
 import com.kursatdev.noelraffleservice.dto.GiftRaffleData;
 import com.kursatdev.noelraffleservice.model.Gift;
 import com.kursatdev.noelraffleservice.model.GiftRaffle;
-import com.kursatdev.noelraffleservice.model.NoelRaffle;
 import com.kursatdev.noelraffleservice.model.Participant;
 import com.kursatdev.noelraffleservice.repository.GiftRaffleRepository;
 import lombok.AllArgsConstructor;
@@ -27,9 +26,7 @@ public class GiftRaffleService {
         giftRaffleRepository.save(giftRaffle);
         Map<Participant, Gift> matches = giftRaffle.performRaffle();
         matches.forEach((participant, gift) -> System.out.println(participant.getDisplayName() + " " + gift.getName()));
-//        matches.forEach((Participant giver, Participant receiver) -> {
-//            mailService.sendEmail(giver.getEmail(), giver.getDisplayName(), receiver.getDisplayName(), giftRaffle.getTitle());
-//        });
+        matches.forEach((Participant participant, Gift gift) -> mailService.sendGiftEmail(participant.getEmail(), participant.getDisplayName(), gift.getName(), giftRaffle.getTitle()));
     }
 
     public GiftRaffle convertDataToGiftRaffle(GiftRaffleData giftRaffleData) {

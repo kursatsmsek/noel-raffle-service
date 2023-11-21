@@ -48,4 +48,24 @@ public class MailService {
         }
     }
 
+    public void sendGiftEmail(String toEmail, String toDisplayName, String giftName, String raffleTitle) {
+        Context context = new Context();
+        context.setVariable("displayName", toDisplayName);
+        context.setVariable("giftName", giftName);
+        context.setVariable("raffleTitle", raffleTitle);
+        context.setLocale(new Locale("tr"));
+        MimeMessage mimeMessage = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "UTF-8");
+
+        try {
+            helper.setTo(toEmail);
+            helper.setSubject(raffleTitle + " | Hediye Çekilişi");
+            String htmlContent = templateEngine.process("gift-email-template", context);
+            helper.setText(htmlContent, true);
+            mailSender.send(mimeMessage);
+        } catch (MessagingException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
 }

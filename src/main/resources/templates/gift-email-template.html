@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>NoelRaffle</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 2%;
+        background-color: tomato;
+        color: white;
+        text-align: left;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: fantasy;
+        letter-spacing: 0.1ch;
+      }
+
+      .container {
+        width: 100%;
+      }
+
+      .img {
+        width: 20%;
+      }
+
+      .receiver-area {
+        font-size: xx-large;
+        font-weight: bold;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="title-area">
+        <img
+          class="img"
+          src="http://drive.google.com/uc?export=view&id=1SAB7bapZKF1o7fQJTCB_JOIUmRkMMmzJ"
+          alt="father-christmas"
+        />
+        <h1 th:text="'Merhaba ' + ${displayName} + ' !'">Merhaba !</h1>
+      </div>
+      <div class="content-area">
+        <p>
+          Hayatın içindeki özel anları daha da renklendirmenin en güzel yolu, sevdiklerimize sürpriz hediyelerle dokunmaktır.
+        </p>
+        <p>
+          Hediyeleşmek, duygusal bağları güçlendirirken aynı zamanda sevgiyi paylaşmanın en tatlı yollarından biridir. 🌟 🎉
+          <span th:text="${raffleTitle}"></span> çekilişini ise sizin için
+          gerçekleştirdik ve kazandığınız hediyeyi size bildirmek istedik. Umarız bu şansınız ömür boyu devam eder.
+          Kazandığınız hediye:
+        </p>
+      </div>
+      <div class="receiver-area" th:text="${giftName}"></div>
+    </div>
+  </body>
+</html>
