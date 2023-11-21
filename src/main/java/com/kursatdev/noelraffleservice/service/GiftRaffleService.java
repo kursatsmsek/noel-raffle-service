@@ -25,7 +25,8 @@ public class GiftRaffleService {
         GiftRaffle giftRaffle = convertDataToGiftRaffle(giftRaffleData);
 
         giftRaffleRepository.save(giftRaffle);
-//        Map<Participant, Participant> matches = giftRaffle.performRaffle();
+        Map<Participant, Gift> matches = giftRaffle.performRaffle();
+        matches.forEach((participant, gift) -> System.out.println(participant.getDisplayName() + " " + gift.getName()));
 //        matches.forEach((Participant giver, Participant receiver) -> {
 //            mailService.sendEmail(giver.getEmail(), giver.getDisplayName(), receiver.getDisplayName(), giftRaffle.getTitle());
 //        });

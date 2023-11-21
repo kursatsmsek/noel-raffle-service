@@ -18,6 +18,6 @@ public abstract class Raffle {
 
     private Date raffleDate;
 
-    public abstract Map<Participant, Participant> performRaffle();
+    public abstract Map<Participant, ?> performRaffle();
 
 }

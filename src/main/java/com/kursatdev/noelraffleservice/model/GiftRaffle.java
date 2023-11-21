@@ -3,8 +3,8 @@ package com.kursatdev.noelraffleservice.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.IntStream;
 
 @Entity
 @Data
@@ -21,8 +21,18 @@ public class GiftRaffle extends Raffle {
     private List<Gift> gifts;
 
     @Override
-    public Map<Participant, Participant> performRaffle() {
-        System.out.println("performing gift raffle");
-        return null;
+    public Map<Participant, Gift> performRaffle() {
+        Map<Participant, Gift> result = new HashMap<>();
+        List<Gift> availableGifts = new ArrayList<>();
+
+        gifts.forEach(gift -> IntStream.range(0, gift.getCount()).forEach(i -> availableGifts.add(gift)));
+
+        List<Participant> shuffledParticipants = new ArrayList<>(participants);
+        Collections.shuffle(shuffledParticipants);
+
+        IntStream.range(0, Math.min(shuffledParticipants.size(), availableGifts.size()))
+                .forEach(i -> result.put(shuffledParticipants.get(i), availableGifts.get(i)));
+
+        return result;
     }
 }
