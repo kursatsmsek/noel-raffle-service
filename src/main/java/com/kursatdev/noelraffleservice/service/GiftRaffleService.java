@@ -32,7 +32,7 @@ public class GiftRaffleService {
     public GiftRaffle convertDataToGiftRaffle(GiftRaffleData giftRaffleData) {
         GiftRaffle giftRaffle = new GiftRaffle();
         giftRaffle.setTitle(giftRaffleData.getTitle());
-        giftRaffle.setRaffleGroup(giftRaffle.getRaffleGroup());
+        giftRaffle.setRaffleGroup(giftRaffleData.getGroup());
         giftRaffle.setSector(giftRaffleData.getSector());
         giftRaffle.setRaffleDate(new Date());
 

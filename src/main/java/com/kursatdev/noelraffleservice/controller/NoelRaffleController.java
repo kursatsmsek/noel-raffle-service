@@ -1,6 +1,7 @@
 package com.kursatdev.noelraffleservice.controller;
 
 import com.kursatdev.noelraffleservice.dto.NoelRaffleData;
+import com.kursatdev.noelraffleservice.service.NoelRaffleService;
 import lombok.AllArgsConstructor;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,8 @@ import java.util.Locale;
 public class NoelRaffleController {
     private final MessageSource messageSource;
 
+    private final NoelRaffleService noelRaffleService;
+
     @PostMapping ("/raffle")
     public ResponseEntity<?> noelRaffle(@RequestBody NoelRaffleData noelRaffleData,
                                         @RequestHeader(name = "Accept-Language", required = false) Locale locale) {
@@ -28,7 +31,7 @@ public class NoelRaffleController {
         }
 
         try {
-            //noelRaffleService.executeRaffle(noelRaffleData);
+            noelRaffleService.executeRaffle(noelRaffleData);
             return ResponseEntity.ok().body(messageSource.getMessage("noel-raffle-success", null, locale));
 
         } catch (Exception exception) {
