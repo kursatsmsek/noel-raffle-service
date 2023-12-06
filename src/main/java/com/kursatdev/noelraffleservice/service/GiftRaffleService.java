@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 @Service
@@ -20,13 +21,12 @@ public class GiftRaffleService {
 
     private final MailService mailService;
 
-    public void executeGiftRaffle(GiftRaffleData giftRaffleData) {
+    public void executeGiftRaffle(GiftRaffleData giftRaffleData, Locale locale) {
         GiftRaffle giftRaffle = convertDataToGiftRaffle(giftRaffleData);
 
         giftRaffleRepository.save(giftRaffle);
         Map<Participant, Gift> matches = giftRaffle.performRaffle();
-        matches.forEach((participant, gift) -> System.out.println(participant.getDisplayName() + " " + gift.getName()));
-        matches.forEach((Participant participant, Gift gift) -> mailService.sendGiftEmail(participant.getEmail(), participant.getDisplayName(), gift.getName(), giftRaffle.getTitle()));
+        matches.forEach((Participant participant, Gift gift) -> mailService.sendGiftEmail(participant.getEmail(), participant.getDisplayName(), gift.getName(), giftRaffle.getTitle(), locale));
     }
 
     public GiftRaffle convertDataToGiftRaffle(GiftRaffleData giftRaffleData) {

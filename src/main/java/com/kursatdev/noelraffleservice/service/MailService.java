@@ -39,7 +39,7 @@ public class MailService {
 
         try {
             helper.setTo(toEmail);
-            helper.setSubject("Mutlu Yıllar");
+            helper.setSubject((locale.getLanguage().equals("tr") ? "Mutlu Yıllar" : "Happy New Year"));
             String templateName = (locale.getLanguage().equals("tr")) ? "email-template" : "email-template_en";
             String htmlContent = templateEngine.process(templateName, context);
             helper.setText(htmlContent, true);
@@ -49,19 +49,20 @@ public class MailService {
         }
     }
 
-    public void sendGiftEmail(String toEmail, String toDisplayName, String giftName, String raffleTitle) {
+    public void sendGiftEmail(String toEmail, String toDisplayName, String giftName, String raffleTitle, Locale locale) {
         Context context = new Context();
         context.setVariable("displayName", toDisplayName);
         context.setVariable("giftName", giftName);
         context.setVariable("raffleTitle", raffleTitle);
-        context.setLocale(new Locale("tr"));
+        context.setLocale(locale);
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "UTF-8");
 
         try {
             helper.setTo(toEmail);
-            helper.setSubject(raffleTitle + " | Hediye Çekilişi");
-            String htmlContent = templateEngine.process("gift-email-template", context);
+            helper.setSubject(raffleTitle + " | " + (locale.getLanguage().equals("tr") ? "Hediye Çekilişi" : "Gift Raffle"));
+            String templateName = (locale.getLanguage().equals("tr")) ? "gift-email-template" : "gift-email-template_en";
+            String htmlContent = templateEngine.process(templateName, context);
             helper.setText(htmlContent, true);
             mailSender.send(mimeMessage);
         } catch (MessagingException e) {

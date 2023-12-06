@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Locale;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("gift")
@@ -38,7 +39,8 @@ public class GiftRaffleController {
         }
 
         try {
-            giftRaffleService.executeGiftRaffle(giftRaffleData);
+            locale = Objects.requireNonNullElse(locale, Locale.ENGLISH);
+            giftRaffleService.executeGiftRaffle(giftRaffleData, locale);
             return ResponseEntity.ok().body(messageSource.getMessage("noel-raffle-success", null, locale));
 
         } catch (Exception exception) {
