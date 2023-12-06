@@ -12,18 +12,29 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class QueueConfig {
-    @Value("${sr.rabbit.queue.name}")
-    private String queueName;
+    @Value("${sr.rabbit.queue1.name}")
+    private String queue1Name;
 
-    @Value("${sr.rabbit.routing.name}")
-    private String routingName;
+    @Value("${sr.rabbit.queue2.name}")
+    private String queue2Name;
+
+    @Value("${sr.rabbit.routing1.name}")
+    private String routing1Name;
+
+    @Value("${sr.rabbit.routing2.name}")
+    private String routing2Name;
 
     @Value("${sr.rabbit.exchange.name}")
     private String exchangeName;
 
     @Bean
-    public Queue queue() {
-        return new Queue(queueName,true);
+    public Queue queue1() {
+        return new Queue(queue1Name, true);
+    }
+
+    @Bean
+    public Queue queue2() {
+        return new Queue(queue2Name, true);
     }
 
     @Bean
@@ -32,8 +43,13 @@ public class QueueConfig {
     }
 
     @Bean
-    public Binding binding(final Queue queue, final  DirectExchange directExchange) {
-        return BindingBuilder.bind(queue).to(directExchange).with(routingName);
+    public Binding binding1(final Queue queue1, final DirectExchange directExchange) {
+        return BindingBuilder.bind(queue1).to(directExchange).with(routing1Name);
+    }
+
+    @Bean
+    public Binding binding2(final Queue queue2, final DirectExchange directExchange) {
+        return BindingBuilder.bind(queue2).to(directExchange).with(routing2Name);
     }
 
     @Bean

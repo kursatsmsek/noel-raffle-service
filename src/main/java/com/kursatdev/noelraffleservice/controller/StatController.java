@@ -12,7 +12,6 @@ import java.util.Locale;
 @RestController
 @RequestMapping("stats")
 @AllArgsConstructor
-@CrossOrigin("http://localhost:3000/")
 public class StatController {
     private final MessageSource messageSource;
 

@@ -51,7 +51,7 @@ public class GiftRaffleService {
         this.rabbitTemplate = rabbitTemplate;
     }
 
-    @Value("${sr.rabbit.routing.name}")
+    @Value("${sr.rabbit.routing2.name}")
     private String routingName;
 
     public void executeGiftRaffle(GiftRaffleData giftRaffleData, Locale locale) {
@@ -71,12 +71,11 @@ public class GiftRaffleService {
             giftRepository.save(gift);
         }
 
-
         Map<Long, Long> matches = raffleService.performGiftRaffle(participants, gifts);
         rabbitTemplate.convertAndSend(directExchange.getName(), routingName, matches);
     }
 
-    @RabbitListener(queues = "${sr.rabbit.queue.name}")
+    @RabbitListener(queues = "${sr.rabbit.queue2.name}")
     public void sendEmails(Map<Long, Long> matches) {
         matches.forEach((personId, giftId) -> {
             Participant person = participantService.getParticipantsById(personId);

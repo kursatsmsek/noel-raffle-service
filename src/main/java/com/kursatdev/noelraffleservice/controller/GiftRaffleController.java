@@ -16,7 +16,6 @@ import java.util.Objects;
 @RestController
 @RequestMapping("gift")
 @AllArgsConstructor
-@CrossOrigin("http://localhost:3000/")
 public class GiftRaffleController {
 
     private final MessageSource messageSource;

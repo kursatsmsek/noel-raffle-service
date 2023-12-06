@@ -39,7 +39,7 @@ public class NoelRaffleService {
         this.rabbitTemplate = rabbitTemplate;
     }
 
-    @Value("${sr.rabbit.routing.name}")
+    @Value("${sr.rabbit.routing1.name}")
     private String routingName;
 
     public void executeRaffle(NoelRaffleData noelRaffleData, Locale locale) {
@@ -58,7 +58,7 @@ public class NoelRaffleService {
         rabbitTemplate.convertAndSend(directExchange.getName(), routingName, matches);
     }
 
-    @RabbitListener(queues = "${sr.rabbit.queue.name}")
+    @RabbitListener(queues = "${sr.rabbit.queue1.name}")
     public void sendEmails(Map<Long, Long> matches) {
         matches.forEach((giverId, receiverId) -> {
             Participant giver = participantService.getParticipantsById(giverId);

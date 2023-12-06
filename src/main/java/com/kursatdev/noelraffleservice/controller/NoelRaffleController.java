@@ -14,7 +14,6 @@ import java.util.Objects;
 @RestController
 @RequestMapping(path = "noel")
 @AllArgsConstructor
-@CrossOrigin("http://localhost:3000/")
 public class NoelRaffleController {
     private final MessageSource messageSource;
 
