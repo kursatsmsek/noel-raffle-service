@@ -18,21 +18,6 @@ public class NoelRaffle extends Raffle {
     private List<Participant> participants;
 
     @Override
-    public Map<Participant, Participant> performRaffle() {
-        Collections.shuffle(participants);
-        Map<Participant, Participant> matches = new HashMap<>();
-
-        for (int i = 0; i < participants.size(); i++) {
-            Participant giver = participants.get(i);
-            Participant receiver = participants.get((i + 1) % participants.size());
-
-            matches.put(giver, receiver);
-        }
-
-        return matches;
-    }
-
-    @Override
     public String toString() {
         return String.valueOf(this.id);
     }

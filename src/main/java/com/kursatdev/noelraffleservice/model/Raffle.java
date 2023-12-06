@@ -18,7 +18,4 @@ public abstract class Raffle {
     private String sector;
 
     private Date raffleDate;
-
-    public abstract Map<Participant, ?> performRaffle();
-
 }
