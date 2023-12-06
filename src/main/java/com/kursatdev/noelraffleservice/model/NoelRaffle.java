@@ -8,7 +8,7 @@ import java.util.*;
 
 @Entity
 @Data
-public class NoelRaffle extends Raffle{
+public class NoelRaffle extends Raffle {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,18 +18,7 @@ public class NoelRaffle extends Raffle{
     private List<Participant> participants;
 
     @Override
-    public Map<Participant, Participant> performRaffle() {
-        Collections.shuffle(participants);
-        Map<Participant, Participant> matches = new HashMap<>();
-
-        for (int i = 0; i < participants.size(); i++) {
-            Participant giver = participants.get(i);
-            Participant receiver = participants.get((i + 1) % participants.size());
-
-            matches.put(giver, receiver);
-        }
-
-        return matches;
+    public String toString() {
+        return String.valueOf(this.id);
     }
-
 }

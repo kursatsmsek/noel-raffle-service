@@ -2,7 +2,9 @@ package com.kursatdev.noelraffleservice.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.Getter;
+import lombok.ToString;
+
+import java.util.Locale;
 
 @Entity
 @Data
@@ -18,14 +20,17 @@ public class Participant {
 
     private String email;
 
+    private Locale locale;
+
     @ManyToOne
     @JoinColumn(name = "noel_raffle_id")
+    @ToString.Exclude
     private NoelRaffle noelRaffle;
 
     @ManyToOne
     @JoinColumn(name = "gift_raffle_id")
+    @ToString.Exclude
     private GiftRaffle giftRaffle;
-
     public String getDisplayName() {
         return name + " " + surname;
     }

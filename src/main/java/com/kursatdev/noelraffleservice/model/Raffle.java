@@ -4,6 +4,7 @@ import jakarta.persistence.MappedSuperclass;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 @MappedSuperclass
@@ -17,7 +18,4 @@ public abstract class Raffle {
     private String sector;
 
     private Date raffleDate;
-
-    public abstract Map<Participant, ?> performRaffle();
-
 }
