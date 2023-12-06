@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Locale;
+import java.util.Objects;
 
 @RestController
 @RequestMapping(path = "noel")
@@ -31,7 +32,8 @@ public class NoelRaffleController {
         }
 
         try {
-            noelRaffleService.executeRaffle(noelRaffleData);
+            locale = Objects.requireNonNullElse(locale, Locale.ENGLISH);
+            noelRaffleService.executeRaffle(noelRaffleData, locale);
             return ResponseEntity.ok().body(messageSource.getMessage("noel-raffle-success", null, locale));
 
         } catch (Exception exception) {

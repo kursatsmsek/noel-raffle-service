@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta
+          name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+  />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>NoelRaffle</title>
+</head>
+<body
+        style="
+      margin: 0;
+      padding: 2%;
+      background-color: #fff8f1;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      letter-spacing: 0.1ch;
+    "
+>
+<div class="container" style="width: 100%">
+  <div class="title-area">
+    <img
+            style="width: 15%"
+            class="img"
+            src="http://drive.google.com/uc?export=view&id=1SAB7bapZKF1o7fQJTCB_JOIUmRkMMmzJ"
+            alt="father-christmas"
+    />
+    <h1
+            th:text="'Merhaba ' + ${displayName} + ' !'"
+            style="
+            font-family: Oswald, Avenir Next Condensed, Arial Narrow,
+              MS UI Gothic, sans-serif;
+            color: tomato;
+          "
+    ></h1>
+  </div>
+  <div style="display: flex; align-items: center; justify-content: center">
+    <div
+            class="content-area"
+            style="
+            font-family: Avenir, sans-serif;
+            margin-right: 16%;
+            margin-left: 16%;
+          "
+    >
+      <p>
+        We are leaving behind 2023, closing its doors, and stepping into the
+        enchanting world of 2024. Our past experiences have shaped us, and
+        now it's time to open a new chapter. 2024 offers an opportunity to
+        fulfill your dreams, embark on new adventures, and savor the taste
+        of success. In this new year, may there be plenty of health,
+        happiness, and love. Come together with your loved ones, smile, and
+        welcome the future with enthusiasm. Wishing you and your loved ones
+        abundant happiness, success, and surprises in the coming year. 🎉
+      </p>
+      <p>
+        Gifting during the entrance to the new year has become a tradition
+        and culture in many societies for a long time. We have conducted the
+        raffle for <span th:text="${raffleTitle}"></span> on your
+        behalf and determined who will be giving gifts to whom. We are
+        confident that you will add excitement to this raffle with a
+        valuable gift. The lucky person we expect you to receive a gift from
+        is:
+      </p>
+    </div>
+  </div>
+  <div
+          class="receiver-area"
+          th:text="${receiverDisplayName}"
+          style="
+          font-size: x-large;
+          color: tomato;
+          text-align: center;
+          margin-top: 20px;
+          font-family: Arvo, Museo Slab, Rockwell, Verdana, serif;
+        "
+  ></div>
+  <img
+          style="width: 30%; margin: 2%"
+          src="https://drive.google.com/uc?export=view&id=1-Px0aZ5k1M1f3tt6GSwKJzIgOmP2tBxv"
+          alt="father-christmas"
+  />
+</div>
+</body>
+</html>

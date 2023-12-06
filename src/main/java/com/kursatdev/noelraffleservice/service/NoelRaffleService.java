@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 @Service
@@ -19,13 +20,13 @@ public class NoelRaffleService {
 
     private final MailService mailService;
 
-    public void executeRaffle(NoelRaffleData noelRaffleData) throws Exception {
+    public void executeRaffle(NoelRaffleData noelRaffleData, Locale locale) throws Exception {
         NoelRaffle noelRaffle = convertDataToNoelRaffle(noelRaffleData);
 
         noelRaffleRepository.save(noelRaffle);
         Map<Participant, Participant> matches = noelRaffle.performRaffle();
         matches.forEach((Participant giver, Participant receiver) -> {
-            mailService.sendEmail(giver.getEmail(), giver.getDisplayName(), receiver.getDisplayName(), noelRaffle.getTitle());
+            mailService.sendEmail(giver.getEmail(), giver.getDisplayName(), receiver.getDisplayName(), noelRaffle.getTitle(), locale);
         });
     }
 

@@ -28,19 +28,20 @@ public class MailService {
         mailSender.send(message);
     }
 
-    public void sendEmail(String toEmail, String toDisplayName, String receiverDisplayName, String raffleTitle) {
+    public void sendEmail(String toEmail, String toDisplayName, String receiverDisplayName, String raffleTitle, Locale locale) {
         Context context = new Context();
         context.setVariable("displayName", toDisplayName);
         context.setVariable("receiverDisplayName", receiverDisplayName);
         context.setVariable("raffleTitle", raffleTitle);
-        context.setLocale(new Locale("tr"));
+        context.setLocale(locale);
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "UTF-8");
 
         try {
             helper.setTo(toEmail);
             helper.setSubject("Mutlu Yıllar");
-            String htmlContent = templateEngine.process("email-template", context);
+            String templateName = (locale.getLanguage().equals("tr")) ? "email-template" : "email-template_en";
+            String htmlContent = templateEngine.process(templateName, context);
             helper.setText(htmlContent, true);
             mailSender.send(mimeMessage);
         } catch (MessagingException e) {
