@@ -35,4 +35,9 @@ public class GiftRaffle extends Raffle {
 
         return result;
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf(this.id);
+    }
 }

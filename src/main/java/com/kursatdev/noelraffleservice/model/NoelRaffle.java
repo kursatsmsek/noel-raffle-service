@@ -8,7 +8,7 @@ import java.util.*;
 
 @Entity
 @Data
-public class NoelRaffle extends Raffle{
+public class NoelRaffle extends Raffle {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,4 +32,8 @@ public class NoelRaffle extends Raffle{
         return matches;
     }
 
+    @Override
+    public String toString() {
+        return String.valueOf(this.id);
+    }
 }

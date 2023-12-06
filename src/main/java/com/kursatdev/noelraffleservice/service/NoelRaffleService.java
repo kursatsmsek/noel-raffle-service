@@ -4,29 +4,67 @@ import com.kursatdev.noelraffleservice.dto.NoelRaffleData;
 import com.kursatdev.noelraffleservice.model.NoelRaffle;
 import com.kursatdev.noelraffleservice.model.Participant;
 import com.kursatdev.noelraffleservice.repository.NoelRaffleRepository;
-import lombok.AllArgsConstructor;
+import com.kursatdev.noelraffleservice.repository.ParticipantRepository;
+import org.springframework.amqp.core.DirectExchange;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 @Service
-@AllArgsConstructor
 public class NoelRaffleService {
 
     private final NoelRaffleRepository noelRaffleRepository;
 
+    private final ParticipantRepository participantRepository;
+
     private final MailService mailService;
 
-    public void executeRaffle(NoelRaffleData noelRaffleData, Locale locale) throws Exception {
-        NoelRaffle noelRaffle = convertDataToNoelRaffle(noelRaffleData);
+    private final ParticipantService participantService;
 
+    private final RaffleService raffleService;
+
+    private final DirectExchange directExchange;
+
+    private final RabbitTemplate rabbitTemplate;
+    public NoelRaffleService(NoelRaffleRepository noelRaffleRepository, ParticipantRepository participantRepository, MailService mailService, ParticipantService participantService, RaffleService raffleService, DirectExchange directExchange, RabbitTemplate rabbitTemplate) {
+        this.noelRaffleRepository = noelRaffleRepository;
+        this.participantRepository = participantRepository;
+        this.mailService = mailService;
+        this.participantService = participantService;
+        this.raffleService = raffleService;
+        this.directExchange = directExchange;
+        this.rabbitTemplate = rabbitTemplate;
+    }
+
+    @Value("${sr.rabbit.routing.name}")
+    private String routingName;
+
+    public void executeRaffle(NoelRaffleData noelRaffleData, Locale locale) {
+        NoelRaffle noelRaffle = convertDataToNoelRaffle(noelRaffleData);
         noelRaffleRepository.save(noelRaffle);
-        Map<Participant, Participant> matches = noelRaffle.performRaffle();
-        matches.forEach((Participant giver, Participant receiver) -> {
-            mailService.sendEmail(giver.getEmail(), giver.getDisplayName(), receiver.getDisplayName(), noelRaffle.getTitle(), locale);
+
+        List<Participant> participants = noelRaffleData.getParticipants();
+        for (Participant participant : participants) {
+            participant.setNoelRaffle(noelRaffle);
+            participant.setLocale(locale);
+            participantRepository.save(participant);
+        }
+
+        Map<Long, Long> matches = raffleService.performNoelRaffle(participants);
+
+        rabbitTemplate.convertAndSend(directExchange.getName(), routingName, matches);
+    }
+
+    @RabbitListener(queues = "${sr.rabbit.queue.name}")
+    public void sendEmails(Map<Long, Long> matches) {
+        matches.forEach((giverId, receiverId) -> {
+            Participant giver = participantService.getParticipantsById(giverId);
+            Participant receiver = participantService.getParticipantsById(receiverId);
+
+            mailService.sendEmail(giver.getEmail(), giver.getDisplayName(), receiver.getDisplayName(), giver.getNoelRaffle().getTitle(), giver.getLocale());
         });
     }
 
@@ -36,12 +74,6 @@ public class NoelRaffleService {
         noelRaffle.setRaffleGroup(noelRaffleData.getGroup());
         noelRaffle.setSector(noelRaffleData.getSector());
         noelRaffle.setRaffleDate(new Date());
-
-        List<Participant> participants = noelRaffleData.getParticipants();
-        for (Participant participant : participants) {
-            participant.setNoelRaffle(noelRaffle);
-        }
-        noelRaffle.setParticipants(participants);
 
         return noelRaffle;
     }

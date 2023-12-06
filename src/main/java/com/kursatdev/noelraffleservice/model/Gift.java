@@ -18,4 +18,8 @@ public class Gift {
     @JoinColumn(name = "gift_raffle_id")
     private GiftRaffle giftRaffle;
 
+    @Override
+    public String toString() {
+        return String.valueOf(this.id);
+    }
 }
