@@ -17,7 +17,7 @@ public class StatController {
 
     private final StatService statService;
 
-    @GetMapping("/")
+    @PostMapping("/")
     public ResponseEntity<?> getStats(@RequestHeader(name = "Accept-Language", required = false) Locale locale) {
         try {
             Stat stats = statService.getStats();
