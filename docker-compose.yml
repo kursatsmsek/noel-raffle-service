@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: 5858
+      MYSQL_DATABASE: raffle
+      MYSQL_ROOT_USER: root
+      MYSQL_PASSWORD: 5858
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  rabbitmq:
+    image: "rabbitmq:management"
+    restart: always
+    environment:
+      RABBITMQ_DEFAULT_USER: root
+      RABBITMQ_DEFAULT_PASS: password
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  spring-boot-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/raffle
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: 5858
+      SPRING_RABBITMQ_HOST: rabbitmq
+    depends_on:
+      - db
+      - rabbitmq
+    ports:
+      - "8080:8080"
