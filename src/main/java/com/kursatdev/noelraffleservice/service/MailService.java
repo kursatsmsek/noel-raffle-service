@@ -43,8 +43,9 @@ public class MailService {
             String templateName = (locale.getLanguage().equals("tr")) ? "email-template" : "email-template_en";
             String htmlContent = templateEngine.process(templateName, context);
             helper.setText(htmlContent, true);
+            helper.setFrom("info@noelraffle.com");
             mailSender.send(mimeMessage);
-        } catch (MessagingException e) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
@@ -64,8 +65,9 @@ public class MailService {
             String templateName = (locale.getLanguage().equals("tr")) ? "gift-email-template" : "gift-email-template_en";
             String htmlContent = templateEngine.process(templateName, context);
             helper.setText(htmlContent, true);
+            helper.setFrom("info@noelraffle.com");
             mailSender.send(mimeMessage);
-        } catch (MessagingException e) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
